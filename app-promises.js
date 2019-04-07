@@ -48,20 +48,40 @@ var getStatus=(id)=>{
     });
 };
 
-getStatus(2).then((user)=>{
-  console.log('getStatus',user);
-}).catch((e)=>{
-  console.log(e);
-});
-getUsers(2).then((user)=>{
-  console.log('result',user);
+var getStatusAlt= async (id)=>{
+  //throw new Error('Error found here');
+  var user=await getUsers(id);
+  var grades=await getGrades(user.schoolId);
+  let avg=0;
+  if (grades.length>0) {
+    avg=grades.map((grade)=>grade.grade).reduce((a,b)=>a+b) / grades.length;
+  }
+  console.log('avg',avg);
+  return `${user.name} has ${avg} %  in the class`;
+  console.log('testas dc',user);
+};
+
+getStatusAlt(1).then((id)=>{
+  console.log(id);
 }).catch((e)=>{
   console.log(e);
 });
 
-
-getGrades(102).then((grades)=>{
-  console.log('result grad',grades);
-}).catch((e)=>{
-  console.log(e);
-});
+// getStatus(2).then((user)=>{
+//   console.log('getStatus',user);
+// }).catch((e)=>{
+//   console.log(e);
+// });
+//
+// getUsers(2).then((user)=>{
+//   console.log('result',user);
+// }).catch((e)=>{
+//   console.log(e);
+// });
+//
+//
+// getGrades(102).then((grades)=>{
+//   console.log('result grad',grades);
+// }).catch((e)=>{
+//   console.log(e);
+// });
